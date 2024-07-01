@@ -1,23 +1,22 @@
 server:
-  port: ${APP_PORT:8085}
+  port: ${PORT:8085}
+  servlet:
+    context-path: ${CONTEXT_PATH:/api}
 spring:
   application:
-    name: ${APP_NAME:Shop}
+    name: ${NAME:shop}
   liquibase:
     enabled: true
     change-log: classpath:/db/changelog/db.changelog-master.xml
   jpa:
     hibernate:
       ddl-auto: validate
-    properties:
-      hibernate:
-        format_sql: true
     show-sql: true
     open-in-view: false
-  output:
-    ansi:
-      enabled: always
-jwt:
-  secret: NDI2MTY1NkM2NDc1NkU2N19jYXJfc2hvcF9hcHA
-  access-token-expiration: 3600000
-  refresh-token-expiration: 86400000
+app:
+  jwt:
+    prefix: "Bearer "
+    header: Authorization
+    secret: NDI2MTY1NkM2NDc1NkU2N19jYXJfc2hvcF9hcHA
+    access-token-expiration: 3600000
+    refresh-token-expiration: 86400000

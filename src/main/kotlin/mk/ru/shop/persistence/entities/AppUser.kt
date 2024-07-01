@@ -4,40 +4,45 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
+import jakarta.persistence.FetchType
 import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
 import jakarta.persistence.OneToMany
+import jakarta.persistence.OneToOne
 import jakarta.validation.constraints.Pattern
 import java.time.LocalDate
 import mk.ru.shop.enums.AppUserRole
 import mk.ru.shop.utils.Patterns
 import org.hibernate.annotations.CreationTimestamp
-import org.hibernate.annotations.Fetch
-import org.hibernate.annotations.FetchMode
 
 @Entity
 data class AppUser(
     @Id
     @Pattern(regexp = Patterns.LOGIN_PATTERN)
-    val login: String? = null,
+    var login: String? = null,
     @Column(nullable = false)
     @Pattern(regexp = Patterns.PASSWORD_PATTERN)
     var password: String? = null,
     @Column(nullable = false, unique = true)
     @Pattern(regexp = Patterns.MAIL_PATTERN)
-    val mail: String? = null,
+    var mail: String? = null,
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    val role: AppUserRole = AppUserRole.USER,
+    var role: AppUserRole = AppUserRole.USER,
     @Column(nullable = false)
-    val agreeReceiveMails: Boolean? = true,
+    var agreeReceiveMails: Boolean? = true,
     @Column(nullable = false)
     var blocked: Boolean = false,
-    @CreationTimestamp
     @Column(nullable = false, updatable = false)
+    @CreationTimestamp
     var registrationDate: LocalDate? = LocalDate.now(),
-    @OneToMany
-    @Fetch(FetchMode.JOIN)
-    @JoinColumn(name = "owner_login")
-    var products: List<Product>? = null
+    @OneToMany(targetEntity = Product::class, mappedBy = "owner", fetch = FetchType.LAZY)
+    var products: List<Product>? = null,
+    @OneToOne(targetEntity = Wallet::class, fetch = FetchType.LAZY)
+    var wallet: Wallet? = null
+//    @OneToMany(targetEntity = Transaction::class, mappedBy = "sender")
+//    @Fetch(FetchMode.JOIN)
+//    var transactionsSender: List<Transaction>? = null,
+//    @OneToMany(targetEntity = Transaction::class, mappedBy = "recipient")
+//    @Fetch(FetchMode.JOIN)
+//    var transactionsRecipient: List<Transaction>? = null
 )

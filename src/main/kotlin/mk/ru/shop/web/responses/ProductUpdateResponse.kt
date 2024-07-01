@@ -1,11 +1,11 @@
-package mk.ru.shop.web.requests
+package mk.ru.shop.web.responses
 
 import java.math.BigDecimal
 import java.util.UUID
 
-data class ProductUpdateRequest(
+data class ProductUpdateResponse(
     val id: UUID,
     val name: String?,
     val description: String?,
-    val price: BigDecimal?,
+    val actualPrice: BigDecimal?,
 )

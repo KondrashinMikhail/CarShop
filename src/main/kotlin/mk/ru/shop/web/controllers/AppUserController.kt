@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/user")
 class AppUserController(private val appUserService: AppUserService) {
     @PostMapping("/register")
     fun register(@RequestBody appUserRegisterRequest: AppUserRegisterRequest): ResponseEntity<AppUserRegisterResponse> =
@@ -28,10 +28,8 @@ class AppUserController(private val appUserService: AppUserService) {
         ResponseEntity.ok(appUserService.changePassword(login = login, passwordChangeRequest = passwordChangeRequest))
 
     @DeleteMapping("/{login}/block")
-    fun block(@PathVariable login: String): ResponseEntity<Unit> =
-        ResponseEntity.ok(appUserService.block(login))
+    fun block(@PathVariable login: String): ResponseEntity<Unit> = ResponseEntity.ok(appUserService.block(login))
 
     @PatchMapping("/{login}/restore")
-    fun restore(@PathVariable login: String): ResponseEntity<Unit> =
-        ResponseEntity.ok(appUserService.restore(login))
+    fun restore(@PathVariable login: String): ResponseEntity<Unit> = ResponseEntity.ok(appUserService.restore(login))
 }

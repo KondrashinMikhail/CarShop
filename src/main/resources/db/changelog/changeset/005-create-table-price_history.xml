@@ -1,0 +1,41 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                       https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="005" author="Mikhail Kondrashin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="product_price_history"/>
+            </not>
+        </preConditions>
+        <createTable tableName="price_history">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="app_user_login" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="price_history"
+                                 baseColumnNames="app_user_login"
+                                 constraintName="app_user_price_history_fk"
+                                 referencedTableName="app_user"
+                                 referencedColumnNames="login"/>
+        <addForeignKeyConstraint baseTableName="price_history"
+                                 baseColumnNames="product_id"
+                                 constraintName="product_price_history_fk"
+                                 referencedTableName="product"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

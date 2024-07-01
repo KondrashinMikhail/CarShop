@@ -4,7 +4,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="001" author="Mikhail Kondrashin">
+    <changeSet id="002" author="Mikhail Kondrashin">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="product"/>
@@ -26,10 +26,20 @@
             <column name="deleted" type="bool">
                 <constraints nullable="false"/>
             </column>
-            <column name="price" type="numeric">
+            <column name="selling" type="bool">
+                <constraints nullable="false"/>
+            </column>
+            <column name="owner_login" type="varchar">
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <addDefaultValue tableName="product" columnName="deleted" defaultValueBoolean="false"/>
+        <addDefaultValue tableName="product" columnName="selling" defaultValueBoolean="false"/>
+        <addForeignKeyConstraint baseTableName="product"
+                                 baseColumnNames="owner_login"
+                                 constraintName="product_owner_fk"
+                                 referencedTableName="app_user"
+                                 referencedColumnNames="login"/>
     </changeSet>
 
 </databaseChangeLog>

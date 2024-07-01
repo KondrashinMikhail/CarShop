@@ -1,0 +1,51 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                       https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="004" author="Mikhail Kondrashin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="transaction"/>
+            </not>
+        </preConditions>
+        <createTable tableName="transaction">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="amount" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sender_id" type="uuid">
+                <constraints nullable="true"/>
+            </column>
+            <column name="recipient_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_id" type="uuid">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="transaction"
+                                 baseColumnNames="recipient_id"
+                                 constraintName="transaction_recipient_fk"
+                                 referencedTableName="wallet"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="transaction"
+                                 baseColumnNames="sender_id"
+                                 constraintName="transaction_sender_fk"
+                                 referencedTableName="wallet"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="transaction"
+                                 baseColumnNames="product_id"
+                                 constraintName="transaction_product_fk"
+                                 referencedTableName="product"
+                                 referencedColumnNames="id"/>
+
+    </changeSet>
+
+</databaseChangeLog>

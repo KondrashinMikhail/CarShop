@@ -1,6 +1,7 @@
-package mk.ru.shop.exceptions
+package mk.ru.shop.handlers
 
-import java.time.LocalDateTime
+import mk.ru.shop.exceptions.BaseException
+import mk.ru.shop.utils.ErrorDetails
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
@@ -17,7 +18,6 @@ class GlobalExceptionHandler {
         log.error(e.message)
         return ResponseEntity.status(e.status).body(
             ErrorDetails(
-                timestamp = LocalDateTime.now(),
                 message = e.message,
                 exceptionProducer = e.stackTrace[0].className.toString(),
                 exceptionClass = e.javaClass.name
@@ -31,7 +31,6 @@ class GlobalExceptionHandler {
         log.error(message)
         return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(
             ErrorDetails(
-                timestamp = LocalDateTime.now(),
                 message = message,
                 exceptionProducer = e.stackTrace[0].className.toString(),
                 exceptionClass = e.javaClass.name

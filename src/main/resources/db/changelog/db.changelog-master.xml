@@ -3,8 +3,10 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <include file="db/changelog/changeset/001-create-table-product.xml"/>
-    <include file="/db/changelog/changeset/002-create-table-app_user.xml"/>
-    <include file="/db/changelog/changeset/003-connect-product-to-users.xml"/>
+    <include file="/db/changelog/changeset/001-create-table-app_user.xml"/>
+    <include file="/db/changelog/changeset/002-create-table-product.xml"/>
+    <include file="/db/changelog/changeset/003-create-table-wallet.xml"/>
+    <include file="/db/changelog/changeset/004-create-table-transaction.xml"/>
+    <include file="/db/changelog/changeset/005-create-table-price_history.xml"/>
 
 </databaseChangeLog>

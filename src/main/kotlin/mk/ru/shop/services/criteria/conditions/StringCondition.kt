@@ -7,7 +7,7 @@ data class StringCondition(
     override val field: String,
     override val operation: CriteriaOperation,
     override val value: String,
-) : CommonCondition<String>(
+) : Condition<String>(
     field = field,
     operation = operation,
     value = value,
